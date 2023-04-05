@@ -17,12 +17,12 @@ export class PrerequisiteController {
     return this.prerequisiteService.findAll();
   }
 
-  @Get(':codPlain/:cidCourse')
+  @Get(':codPlain/:codCourse')
   findOne(@Param('codPlain') codPlain: string, @Param('codCourse') codCourse: string) {
     return this.prerequisiteService.findOne(codPlain, codCourse);
   }
 
-  @Patch(':codPlain/:cidCourse')
+  @Patch(':codPlain/:codCourse')
   update(@Param('codPlain') codPlain: string, @Param('codCourse') codCourse: string, @Body() updatePrerequisiteDto: UpdatePrerequisiteDto) {
     return this.prerequisiteService.update(codPlain, codCourse, updatePrerequisiteDto);
   }

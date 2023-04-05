@@ -43,11 +43,11 @@ import { AuthModule } from './auth/auth.module';
   providers: [AppService],
 })
 
-export class AppModule { }
-// export class AppModule implements NestModule {
-//   configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
-//     consumer
-//       .apply(TokenMiddleware)
-//       .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
-//   }
-// }
+// export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
+    consumer
+      .apply(TokenMiddleware)
+      .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
+  }
+}

@@ -18,18 +18,14 @@ import { StudyplainModel } from './studyplain/studyplain.model';
 import { CourseModel } from './course/course.model';
 import { CareerModel } from './career/career.model';
 import { AvailableCourseModel } from './availablecourse/availablecourse.model';
-import { JwtModule } from '@nestjs/jwt';
 import { TokenMiddleware } from './middlewares/token.middleware';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
-    }),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' }
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -41,7 +37,8 @@ import { TokenMiddleware } from './middlewares/token.middleware';
       models: [PersonModel, StudentModel, SubjecttakenModel, StudyplainModel, CourseModel, CareerModel, AvailableCourseModel]
     }),
     PersonModule, StudentModule, SubjecttakenModule, StudyplainModule, CourseModule, CareerModule, AvailablecourseModule,
-    PrerequisiteModule],
+    PrerequisiteModule,
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

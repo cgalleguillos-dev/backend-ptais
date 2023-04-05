@@ -22,6 +22,18 @@ export class StudentService {
     return student;
   }
 
+  async findByRut(rutPerson: string): Promise<StudentModel> {
+    const student = await this.studentModel.findOne({
+      where: {
+        rut_person: rutPerson,
+      },
+    });
+    if (!student) {
+      throw new NotFoundException('Student not found');
+    }
+    return student;
+  }
+
   async create(createStudentDto: CreateStudentDto): Promise<StudentModel> {
     const student = await this.studentModel.findOne({
       where: {

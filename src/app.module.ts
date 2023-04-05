@@ -19,7 +19,7 @@ import { CourseModel } from './course/course.model';
 import { CareerModel } from './career/career.model';
 import { AvailableCourseModel } from './availablecourse/availablecourse.model';
 import { JwtModule } from '@nestjs/jwt';
-// import { TokenMiddleware } from './middlewares/token.middleware';
+import { TokenMiddleware } from './middlewares/token.middleware';
 
 @Module({
   imports: [
@@ -46,11 +46,11 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [AppService],
 })
 
-export class AppModule { }
-// export class AppModule implements NestModule {
-//   configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
-//     consumer
-//       .apply(TokenMiddleware)
-//       .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
-//   }
-// }
+// export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
+    consumer
+      .apply(TokenMiddleware)
+      .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
+  }
+}

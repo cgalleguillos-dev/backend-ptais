@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAvailablecourseDto } from './dto/create-availablecourse.dto';
 import { UpdateAvailablecourseDto } from './dto/update-availablecourse.dto';
 import { AvailableCourseModel } from './availablecourse.model';
@@ -9,7 +9,22 @@ export class AvailablecourseService {
 
   constructor(@InjectModel(AvailableCourseModel) private availableCoursModels: typeof AvailableCourseModel) { }
 
-  async create(createAvailablecourseDto: CreateAvailablecourseDto) {
+  private async findAvailableCourse(codStudyPlain: string, codCourse: string): Promise<AvailableCourseModel> {
+    const availableCourse = await this.availableCoursModels.findOne(
+      {
+        where: {
+          cod_study_plain: codStudyPlain,
+          cod_course: codCourse
+        }
+      }
+    );
+    if (!availableCourse) {
+      throw new NotFoundException('El registro no existe');
+    }
+    return availableCourse;
+  }
+
+  async create(createAvailablecourseDto: CreateAvailablecourseDto): Promise<AvailableCourseModel> {
     const availableCourse = await this.availableCoursModels.findOne(
       {
         where: {
@@ -24,57 +39,24 @@ export class AvailablecourseService {
     return await this.availableCoursModels.create(createAvailablecourseDto);
   }
 
-  async findAll() {
-    const availableCourses = await this.availableCoursModels.findAll();
-    return {
-      availableCourses: availableCourses
-    }
+  async findAll(): Promise<AvailableCourseModel[]> {
+    return await this.availableCoursModels.findAll();
   }
 
-  async findOne(codStudyPlain: string, codCourse: string) {
-    const availableCourse = await this.availableCoursModels.findOne(
-      {
-        where: {
-          cod_study_plain: codStudyPlain,
-          cod_course: codCourse
-        }
-      }
-    );
-    return {
-      availableCourse: availableCourse
-    }
+  async findOne(codStudyPlain: string, codCourse: string): Promise<AvailableCourseModel> {
+    return await this.findAvailableCourse(codStudyPlain, codCourse);
   }
 
-  async update(codStudyPlain: string, codCourse: string, updateAvailablecourseDto: UpdateAvailablecourseDto) {
-    const availableCourse = await this.availableCoursModels.findOne(
-      {
-        where: {
-          cod_study_plain: codStudyPlain,
-          cod_course: codCourse
-        }
-      }
-    );
-    if (availableCourse) {
-      await availableCourse.update(updateAvailablecourseDto);
-    }
-    return {
-      availableCourse: availableCourse
-    }
+  async update(codStudyPlain: string, codCourse: string, updateAvailablecourseDto: UpdateAvailablecourseDto): Promise<AvailableCourseModel> {
+    const availableCourse = await this.findAvailableCourse(codStudyPlain, codCourse);
+    await availableCourse.update(updateAvailablecourseDto);
+    return availableCourse
+
   }
 
-  async remove(codStudyPlain: string, codCourse: string) {
-    const availableCourse = await this.availableCoursModels.findOne(
-      {
-        where: {
-          cod_study_plain: codStudyPlain,
-          cod_course: codCourse
-        }
-      });
-    if (availableCourse) {
-      availableCourse.destroy();
-    }
-    return {
-      availableCourse: availableCourse
-    }
+  async remove(codStudyPlain: string, codCourse: string): Promise<AvailableCourseModel> {
+    const availableCourse = await this.findAvailableCourse(codStudyPlain, codCourse);
+    availableCourse.destroy();
+    return availableCourse
   }
 }

@@ -9,7 +9,6 @@ export class PrerequisiteService {
 
   constructor(@InjectModel(PrerequisiteModel) private prerequisiteModels: typeof PrerequisiteModel) { }
 
-
   private async findPrerequisiteByCodPlainAndCodCourse(codPlain: string, codCourse: string): Promise<PrerequisiteModel> {
     const prerequisite = await this.prerequisiteModels.findOne({
       where: {
@@ -23,7 +22,7 @@ export class PrerequisiteService {
     return prerequisite;
   }
 
-  async create(createPrerequisiteDto: CreatePrerequisiteDto) {
+  async create(createPrerequisiteDto: CreatePrerequisiteDto): Promise<PrerequisiteModel> {
     const prerequisite = await this.prerequisiteModels.findOne({
       where: {
         cod_plain: createPrerequisiteDto.cod_plain,
@@ -36,33 +35,23 @@ export class PrerequisiteService {
     return await this.prerequisiteModels.create(createPrerequisiteDto);
   }
 
-  async findAll() {
-    const prerequisites = await this.prerequisiteModels.findAll();
-    return {
-      prerequisites: prerequisites
-    }
+  async findAll(): Promise<PrerequisiteModel[]> {
+    return await this.prerequisiteModels.findAll();
   }
 
-  async findOne(codPlain: string, codCourse: string) {
-    const prerequisite = await this.findPrerequisiteByCodPlainAndCodCourse(codPlain, codCourse);
-    return {
-      prerequisite: prerequisite
-    }
+  async findOne(codPlain: string, codCourse: string): Promise<PrerequisiteModel> {
+    return await this.findPrerequisiteByCodPlainAndCodCourse(codPlain, codCourse);
   }
 
-  async update(codPlain: string, codCourse: string, updatePrerequisiteDto: UpdatePrerequisiteDto) {
+  async update(codPlain: string, codCourse: string, updatePrerequisiteDto: UpdatePrerequisiteDto): Promise<PrerequisiteModel> {
     const prerequisite = await this.findPrerequisiteByCodPlainAndCodCourse(codPlain, codCourse);
     await prerequisite.update(updatePrerequisiteDto);
-    return {
-      prerequisite: prerequisite
-    }
+    return prerequisite;
   }
 
-  async remove(codPlain: string, codCourse: string) {
+  async remove(codPlain: string, codCourse: string): Promise<PrerequisiteModel> {
     const prerequisite = await this.findPrerequisiteByCodPlainAndCodCourse(codPlain, codCourse);
     await prerequisite.destroy();
-    return {
-      prerequisite: prerequisite
-    }
+    return prerequisite;
   }
 }

@@ -13,7 +13,7 @@ export class CourseService {
     return await genericFindByCod(this.courseModels, cod);
   }
 
-  async create(createCourseDto: CreateCourseDto) {
+  async create(createCourseDto: CreateCourseDto): Promise<CourseModel> {
     const course = await this.courseModels.findOne({
       where: {
         cod: createCourseDto.cod
@@ -23,39 +23,28 @@ export class CourseService {
     if (course) {
       throw new ConflictException('El registro ya existe');
     }
-
     return await this.courseModels.create(createCourseDto);
 
   }
 
-  async findAll() {
-    const courses = await this.courseModels.findAll();
-    return {
-      courses: courses
-    }
+  async findAll(): Promise<CourseModel[]> {
+    return await this.courseModels.findAll();
   }
 
-  async findOne(cod: string) {
-    const courses = await this.findCourseByCod(cod);
-    return {
-      courses: courses
-    }
+  async findOne(cod: string): Promise<CourseModel> {
+    return await this.findCourseByCod(cod);
   }
 
-  async update(cod: string, updateCourseDto: UpdateCourseDto) {
+  async update(cod: string, updateCourseDto: UpdateCourseDto): Promise<CourseModel> {
     const course = await this.findCourseByCod(cod);
     await course.update(updateCourseDto);
+    return course;
 
-    return {
-      course: course
-    }
   }
 
-  async remove(cod: string) {
+  async remove(cod: string): Promise<CourseModel> {
     const course = await this.findCourseByCod(cod);
     await course.destroy();
-    return {
-      course: course
-    }
+    return course;
   }
 }

@@ -22,7 +22,7 @@ export class StudentService {
     return student;
   }
 
-  async create(createStudentDto: CreateStudentDto) {
+  async create(createStudentDto: CreateStudentDto): Promise<StudentModel> {
     const student = await this.studentModel.findOne({
       where: {
         rut_person: createStudentDto.rut_person,
@@ -35,33 +35,23 @@ export class StudentService {
     return await this.studentModel.create(createStudentDto);
   }
 
-  async findAll() {
-    const students = await this.studentModel.findAll();
-    return {
-      students: students,
-    };
+  async findAll(): Promise<StudentModel[]> {
+    return await this.studentModel.findAll();
   }
 
-  async findOne(rutPerson: string, codPlain: string) {
-    const student = await this.findStudent(rutPerson, codPlain);
-    return {
-      student: student,
-    };
+  async findOne(rutPerson: string, codPlain: string): Promise<StudentModel> {
+    return await this.findStudent(rutPerson, codPlain);
   }
 
-  async update(rutPerson: string, codPlain: string, updateStudentDto: UpdateStudentDto) {
+  async update(rutPerson: string, codPlain: string, updateStudentDto: UpdateStudentDto): Promise<StudentModel> {
     const student = await this.findStudent(rutPerson, codPlain);
     await student.update(updateStudentDto);
-    return {
-      student: student,
-    };
+    return student;
   }
 
-  async remove(rutPerson: string, codPlain: string) {
+  async remove(rutPerson: string, codPlain: string): Promise<StudentModel> {
     const student = await this.findStudent(rutPerson, codPlain);
     await student.destroy();
-    return {
-      student: student,
-    };
+    return student;
   }
 }

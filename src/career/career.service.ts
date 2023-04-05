@@ -14,7 +14,7 @@ export class CareerService {
     return await genericFindByCod(this.careerModels, cod);
   }
 
-  async create(createCareerDto: CreateCareerDto) {
+  async create(createCareerDto: CreateCareerDto): Promise<CareerModel> {
     const career = await this.careerModels.findOne({
       where: {
         cod: createCareerDto.cod
@@ -27,33 +27,23 @@ export class CareerService {
 
   }
 
-  async findAll() {
-    const careers = await this.careerModels.findAll();
-    return {
-      careers: careers
-    }
+  async findAll(): Promise<CareerModel[]> {
+    return await this.careerModels.findAll();
   }
 
-  async findOne(cod: string) {
-    const career = await this.findCareerByCod(cod);
-    return {
-      career: career
-    }
+  async findOne(cod: string): Promise<CareerModel> {
+    return await this.findCareerByCod(cod);
   }
 
-  async update(cod: string, updateCareerDto: UpdateCareerDto) {
+  async update(cod: string, updateCareerDto: UpdateCareerDto): Promise<CareerModel> {
     const career = await this.findCareerByCod(cod);
     await career.update(updateCareerDto);
-    return {
-      career: career
-    }
+    return career;
   }
 
-  async remove(cod: string) {
+  async remove(cod: string): Promise<CareerModel> {
     const career = await this.findCareerByCod(cod);
     await career.destroy();
-    return {
-      career: career
-    }
+    return career;
   }
 }

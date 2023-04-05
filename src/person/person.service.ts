@@ -21,7 +21,7 @@ export class PersonService {
     return person;
   }
 
-  async create(createPersonDto: CreatePersonDto) {
+  async create(createPersonDto: CreatePersonDto): Promise<PersonModel> {
     const person = await this.personModels.findOne({
       where: {
         rut: createPersonDto.rut
@@ -33,33 +33,24 @@ export class PersonService {
     return await this.personModels.create(createPersonDto);
   }
 
-  async findAll() {
-    const persons = await this.personModels.findAll();
-    return {
-      persons: persons
-    }
+  async findAll(): Promise<PersonModel[]> {
+    return await this.personModels.findAll();
   }
 
-  async findOne(rut: string) {
-    const person = await this.findPersonByRut(rut);
-    return {
-      person: person
-    }
+  async findOne(rut: string): Promise<PersonModel> {
+    return await this.findPersonByRut(rut);
   }
 
-  async update(rut: string, updatePersonDto: UpdatePersonDto) {
+  async update(rut: string, updatePersonDto: UpdatePersonDto): Promise<PersonModel> {
     const person = await this.findPersonByRut(rut);
     await person.update(updatePersonDto);
-    return {
-      person: person
-    }
+    return person;
+
   }
 
-  async remove(rut: string) {
+  async remove(rut: string): Promise<PersonModel> {
     const person = await this.findPersonByRut(rut);
     await person.destroy();
-    return {
-      person: person
-    }
+    return person;
   }
 }

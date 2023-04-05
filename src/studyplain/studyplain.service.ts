@@ -9,8 +9,7 @@ import { genericFindByCod } from 'src/utils/sequelize.utils';
 export class StudyplainService {
   constructor(@InjectModel(StudyplainModel) private studyplainModels: typeof StudyplainModel) { }
 
-
-  async create(createStudyplainDto: CreateStudyplainDto) {
+  async create(createStudyplainDto: CreateStudyplainDto): Promise<StudyplainModel> {
     const studyplain = await this.studyplainModels.findOne({
       where: {
         cod: createStudyplainDto.cod,
@@ -22,33 +21,23 @@ export class StudyplainService {
     return await this.studyplainModels.create(createStudyplainDto);
   }
 
-  async findAll() {
-    const studyplain = await this.studyplainModels.findAll();
-    return {
-      studyplain: studyplain,
-    };
+  async findAll(): Promise<StudyplainModel[]> {
+    return await this.studyplainModels.findAll();
   }
 
-  async findOne(cod: string) {
-    const studyplain = await genericFindByCod(this.studyplainModels, cod);
-    return {
-      studyplain: studyplain,
-    };
+  async findOne(cod: string): Promise<StudyplainModel> {
+    return await genericFindByCod(this.studyplainModels, cod);
   }
 
-  async update(cod: string, updateStudyplainDto: UpdateStudyplainDto) {
+  async update(cod: string, updateStudyplainDto: UpdateStudyplainDto): Promise<StudyplainModel> {
     const studyplain = await genericFindByCod(this.studyplainModels, cod);
     await studyplain.update(updateStudyplainDto);
-    return {
-      studyplain: studyplain,
-    };
+    return studyplain;
   }
 
-  async remove(cod: string) {
+  async remove(cod: string): Promise<StudyplainModel> {
     const studyplain = await genericFindByCod(this.studyplainModels, cod);
     await studyplain.destroy();
-    return {
-      studyplain: studyplain,
-    };
+    return studyplain;
   }
 }

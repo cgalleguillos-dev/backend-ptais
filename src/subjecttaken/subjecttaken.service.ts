@@ -24,7 +24,7 @@ export class SubjecttakenService {
     return subjectTaken;
   }
 
-  async create(createSubjecttakenDto: CreateSubjecttakenDto) {
+  async create(createSubjecttakenDto: CreateSubjecttakenDto): Promise<SubjecttakenModel> {
     const subjectTaken = await this.subjecttakenModels.findOne({
       where: {
         cod_course: createSubjecttakenDto.cod_course,
@@ -38,33 +38,23 @@ export class SubjecttakenService {
     return await this.subjecttakenModels.create(createSubjecttakenDto);
   }
 
-  async findAll() {
-    const subjectTaken = await this.subjecttakenModels.findAll();
-    return {
-      subjectTaken: subjectTaken,
-    };
+  async findAll(): Promise<SubjecttakenModel[]> {
+    return await this.subjecttakenModels.findAll();
   }
 
-  async findOne(codCourse: string, codPlain: string, rutPerson: string) {
-    const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
-    return {
-      subjectTaken: subjectTaken,
-    };
+  async findOne(codCourse: string, codPlain: string, rutPerson: string): Promise<SubjecttakenModel> {
+    return await this.findSubjecttaken(codCourse, codPlain, rutPerson);
   }
 
-  async update(codCourse: string, codPlain: string, rutPerson: string, updateSubjecttakenDto: UpdateSubjecttakenDto) {
+  async update(codCourse: string, codPlain: string, rutPerson: string, updateSubjecttakenDto: UpdateSubjecttakenDto): Promise<SubjecttakenModel> {
     const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
     await subjectTaken.update(updateSubjecttakenDto);
-    return {
-      subjectTaken: subjectTaken,
-    };
+    return subjectTaken;
   }
 
-  async remove(codCourse: string, codPlain: string, rutPerson: string) {
+  async remove(codCourse: string, codPlain: string, rutPerson: string): Promise<SubjecttakenModel> {
     const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
     await subjectTaken.destroy();
-    return {
-      subjectTaken: subjectTaken,
-    };
+    return subjectTaken;
   }
 }

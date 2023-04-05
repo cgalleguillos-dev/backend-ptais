@@ -46,11 +46,11 @@ import { TokenMiddleware } from './middlewares/token.middleware';
   providers: [AppService],
 })
 
-// export class AppModule { }
-export class AppModule implements NestModule {
-  configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
-    consumer
-      .apply(TokenMiddleware)
-      .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
-  }
-}
+export class AppModule { }
+// export class AppModule implements NestModule {
+//   configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
+//     consumer
+//       .apply(TokenMiddleware)
+//       .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
+//   }
+// }

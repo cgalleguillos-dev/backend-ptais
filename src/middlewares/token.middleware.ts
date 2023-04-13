@@ -1,4 +1,4 @@
-import { HttpException, Injectable, InternalServerErrorException, NestMiddleware, UnauthorizedException } from '@nestjs/common';
+import { HttpException, Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
@@ -23,5 +23,4 @@ export class TokenMiddleware implements NestMiddleware {
             throw new HttpException(error.message, error.status || 500);
         }
     }
-
 }

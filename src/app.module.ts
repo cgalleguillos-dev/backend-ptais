@@ -20,13 +20,14 @@ import { CareerModel } from './career/career.model';
 import { AvailableCourseModel } from './availablecourse/availablecourse.model';
 import { TokenMiddleware } from './middlewares/token.middleware';
 import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
       envFilePath: '.env',
     }),
+    JwtModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.DB_HOST,

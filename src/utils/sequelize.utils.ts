@@ -3,8 +3,7 @@ import { Model, ModelCtor } from 'sequelize-typescript';
 
 export async function genericFindByCod<T extends Model>(
     model: ModelCtor<T>,
-    cod: string
-): Promise<T> {
+    cod: string): Promise<T> {
     const record = await model.findByPk(cod);
     if (!record) {
         throw new NotFoundException(

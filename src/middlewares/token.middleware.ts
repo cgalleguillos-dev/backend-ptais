@@ -16,7 +16,7 @@ export class TokenMiddleware implements NestMiddleware {
             const token = auth.split(" ").length === 2 ? auth.split(" ")[1] : null;
             if (!token) throw new UnauthorizedException('Invalid token');
 
-            const verifyToken = this.jwtService.verify(token);
+            const verifyToken = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
             if (!verifyToken) throw new UnauthorizedException('Invalid token');
             next();
         } catch (error) {

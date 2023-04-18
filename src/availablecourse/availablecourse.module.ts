@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AvailablecourseService } from './availablecourse.service';
 import { AvailablecourseController } from './availablecourse.controller';
-import { AvailableCourseModel } from './availablecourse.model';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { AvailableCourse } from './entities/availablecourse.entity';
 
 @Module({
-  imports: [SequelizeModule.forFeature([AvailableCourseModel])],
+  imports: [SequelizeModule.forFeature([AvailableCourse])],
   controllers: [AvailablecourseController],
   providers: [AvailablecourseService]
 })

@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { PrerequisiteService } from './prerequisite.service';
 import { PrerequisiteController } from './prerequisite.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { PrerequisiteModel } from './prerequisite.model';
+import { Prerequisite } from './entities/prerequisite.entity';
 
 @Module({
-  imports: [SequelizeModule.forFeature([PrerequisiteModel])],
+  imports: [SequelizeModule.forFeature([Prerequisite])],
   controllers: [PrerequisiteController],
-  providers: [PrerequisiteService]
+  providers: [PrerequisiteService],
+  exports: [PrerequisiteService]
 })
 export class PrerequisiteModule { }

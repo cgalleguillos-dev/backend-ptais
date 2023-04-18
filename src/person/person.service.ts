@@ -2,14 +2,14 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { PersonModel } from './person.model';
+import { Person } from './entities/person.entity';
 
 @Injectable()
 export class PersonService {
 
-  constructor(@InjectModel(PersonModel) private personModels: typeof PersonModel) { }
+  constructor(@InjectModel(Person) private personModels: typeof Person) { }
 
-  private async findPersonByRut(rut: string): Promise<PersonModel> {
+  private async findPersonByRut(rut: string): Promise<Person> {
     const person = await this.personModels.findOne({
       where: {
         rut: rut
@@ -21,7 +21,7 @@ export class PersonService {
     return person;
   }
 
-  async create(createPersonDto: CreatePersonDto): Promise<PersonModel> {
+  async create(createPersonDto: CreatePersonDto): Promise<Person> {
     const person = await this.personModels.findOne({
       where: {
         rut: createPersonDto.rut
@@ -33,22 +33,22 @@ export class PersonService {
     return await this.personModels.create(createPersonDto);
   }
 
-  async findAll(): Promise<PersonModel[]> {
+  async findAll(): Promise<Person[]> {
     return await this.personModels.findAll();
   }
 
-  async findOne(rut: string): Promise<PersonModel> {
+  async findOne(rut: string): Promise<Person> {
     return await this.findPersonByRut(rut);
   }
 
-  async update(rut: string, updatePersonDto: UpdatePersonDto): Promise<PersonModel> {
+  async update(rut: string, updatePersonDto: UpdatePersonDto): Promise<Person> {
     const person = await this.findPersonByRut(rut);
     await person.update(updatePersonDto);
     return person;
 
   }
 
-  async remove(rut: string): Promise<PersonModel> {
+  async remove(rut: string): Promise<Person> {
     const person = await this.findPersonByRut(rut);
     await person.destroy();
     return person;

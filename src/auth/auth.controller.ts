@@ -10,4 +10,9 @@ export class AuthController {
   login(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.login(createAuthDto);
   }
+
+  @Post('refreshToken')
+  refreshToken(@Body() createAuthDto: CreateAuthDto) {
+    return this.authService.refreshToken(createAuthDto);
+  }
 }

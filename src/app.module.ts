@@ -10,17 +10,19 @@ import { CareerModule } from './career/career.module';
 import { AvailablecourseModule } from './availablecourse/availablecourse.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { SubjecttakenModel } from './subjecttaken/subjecttaken.model';
 import { PrerequisiteModule } from './prerequisite/prerequisite.module';
-import { PersonModel } from './person/person.model';
-import { StudentModel } from './student/student.model';
-import { StudyplainModel } from './studyplain/studyplain.model';
-import { CourseModel } from './course/course.model';
-import { CareerModel } from './career/career.model';
-import { AvailableCourseModel } from './availablecourse/availablecourse.model';
 import { TokenMiddleware } from './middlewares/token.middleware';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { AlgorithmModule } from './algorithm/algorithm.module';
+import { Subjecttaken } from './subjecttaken/entities/subjecttaken.entity';
+import { Studyplain } from './studyplain/entities/studyplain.entity';
+import { Student } from './student/entities/student.entity';
+import { Course } from './course/entities/course.entity';
+import { Career } from './career/entities/career.entity';
+import { AvailableCourse } from './availablecourse/entities/availablecourse.entity';
+import { Prerequisite } from './prerequisite/entities/prerequisite.entity';
+import { Person } from './person/entities/person.entity';
 
 @Module({
   imports: [
@@ -35,11 +37,12 @@ import { JwtModule } from '@nestjs/jwt';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      models: [PersonModel, StudentModel, SubjecttakenModel, StudyplainModel, CourseModel, CareerModel, AvailableCourseModel]
+      models: [Person, Student, Subjecttaken, Studyplain, Course, Career, AvailableCourse, Prerequisite]
     }),
     PersonModule, StudentModule, SubjecttakenModule, StudyplainModule, CourseModule, CareerModule, AvailablecourseModule,
     PrerequisiteModule,
-    AuthModule],
+    AuthModule,
+    AlgorithmModule],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -49,6 +52,6 @@ export class AppModule implements NestModule {
   configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
     consumer
       .apply(TokenMiddleware)
-      .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse');
+      .forRoutes('person', 'student', 'subjecttaken', 'studyplain', 'course', 'career', 'availablecourse', 'algorithm');
   }
 }

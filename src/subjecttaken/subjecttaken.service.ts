@@ -2,15 +2,15 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreateSubjecttakenDto } from './dto/create-subjecttaken.dto';
 import { UpdateSubjecttakenDto } from './dto/update-subjecttaken.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { SubjecttakenModel } from './subjecttaken.model';
+import { Subjecttaken } from './entities/subjecttaken.entity';
 
 @Injectable()
 export class SubjecttakenService {
 
-  constructor(@InjectModel(SubjecttakenModel)
-  private subjecttakenModels: typeof SubjecttakenModel) { }
+  constructor(@InjectModel(Subjecttaken)
+  private subjecttakenModels: typeof Subjecttaken) { }
 
-  private async findSubjecttaken(codCourse: string, codPlain: string, rutPerson: string): Promise<SubjecttakenModel> {
+  private async findSubjecttaken(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
     const subjectTaken = await this.subjecttakenModels.findOne({
       where: {
         cod_course: codCourse,
@@ -24,7 +24,7 @@ export class SubjecttakenService {
     return subjectTaken;
   }
 
-  async create(createSubjecttakenDto: CreateSubjecttakenDto): Promise<SubjecttakenModel> {
+  async create(createSubjecttakenDto: CreateSubjecttakenDto): Promise<Subjecttaken> {
     const subjectTaken = await this.subjecttakenModels.findOne({
       where: {
         cod_course: createSubjecttakenDto.cod_course,
@@ -38,23 +38,24 @@ export class SubjecttakenService {
     return await this.subjecttakenModels.create(createSubjecttakenDto);
   }
 
-  async findAll(): Promise<SubjecttakenModel[]> {
+  async findAll(): Promise<Subjecttaken[]> {
     return await this.subjecttakenModels.findAll();
   }
 
-  async findOne(codCourse: string, codPlain: string, rutPerson: string): Promise<SubjecttakenModel> {
+  async findOne(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
     return await this.findSubjecttaken(codCourse, codPlain, rutPerson);
   }
 
-  async update(codCourse: string, codPlain: string, rutPerson: string, updateSubjecttakenDto: UpdateSubjecttakenDto): Promise<SubjecttakenModel> {
+  async update(codCourse: string, codPlain: string, rutPerson: string, updateSubjecttakenDto: UpdateSubjecttakenDto): Promise<Subjecttaken> {
     const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
     await subjectTaken.update(updateSubjecttakenDto);
     return subjectTaken;
   }
 
-  async remove(codCourse: string, codPlain: string, rutPerson: string): Promise<SubjecttakenModel> {
+  async remove(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
     const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
     await subjectTaken.destroy();
     return subjectTaken;
   }
+
 }

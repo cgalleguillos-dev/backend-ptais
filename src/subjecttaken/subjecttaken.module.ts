@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { SubjecttakenService } from './subjecttaken.service';
 import { SubjecttakenController } from './subjecttaken.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { SubjecttakenModel } from './subjecttaken.model';
+import { Subjecttaken } from './entities/subjecttaken.entity';
 
 @Module({
-  imports: [SequelizeModule.forFeature([SubjecttakenModel])],
+  imports: [SequelizeModule.forFeature([Subjecttaken])],
   controllers: [SubjecttakenController],
   providers: [SubjecttakenService]
 })

@@ -18,4 +18,13 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  async refreshToken(createAuthDto: CreateAuthDto) {
+    const student = await this.studentService.findByRut(createAuthDto.rut);
+    const payload = { rutStudent: student.rut_person };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
 }

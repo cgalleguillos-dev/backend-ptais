@@ -17,18 +17,18 @@ export class SubjecttakenController {
     return this.subjecttakenService.findAll();
   }
 
-  @Get(':codCourse/:codPlain/:rutPerson')
-  findOne(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rutPerson') rutPerson: string) {
-    return this.subjecttakenService.findOne(codCourse, codPlain, rutPerson);
+  @Get(':codCourse/:codPlain/:rut')
+  findOne(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rut') rut: string) {
+    return this.subjecttakenService.findOne(codCourse, codPlain, rut);
   }
 
-  @Patch(':codCourse/:codPlain/:rutPerson')
-  update(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rutPerson') rutPerson: string, @Body() updateSubjecttakenDto: UpdateSubjecttakenDto) {
-    return this.subjecttakenService.update(codCourse, codPlain, rutPerson, updateSubjecttakenDto);
+  @Patch(':codCourse/:codPlain/:rut')
+  update(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rut') rut: string, @Body() updateSubjecttakenDto: UpdateSubjecttakenDto) {
+    return this.subjecttakenService.update(codCourse, codPlain, rut, updateSubjecttakenDto);
   }
 
-  @Delete(':codCourse/:codPlain/:rutPerson')
-  remove(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rutPerson') rutPerson: string) {
-    return this.subjecttakenService.remove(codCourse, codPlain, rutPerson);
+  @Delete(':codCourse/:codPlain/:rut')
+  remove(@Param('codCourse') codCourse: string, @Param('codPlain') codPlain: string, @Param('rut') rut: string) {
+    return this.subjecttakenService.remove(codCourse, codPlain, rut);
   }
 }

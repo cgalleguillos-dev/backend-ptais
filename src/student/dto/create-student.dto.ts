@@ -7,7 +7,7 @@ export class CreateStudentDto {
         description: 'Rut',
         example: '123456789',
     })
-    rut_person: string;
+    rut: string;
 
     @IsString()
     @ApiProperty({

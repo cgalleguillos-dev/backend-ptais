@@ -17,18 +17,18 @@ export class AvailablecourseController {
     return this.availablecourseService.findAll();
   }
 
-  @Get(':cod_study_plain/:cod_course')
-  findOne(@Param('cod_study_plain') codStudyPlain: string, @Param('cod_course') codCourse: string) {
+  @Get(':codStudyPlain/:codCourse')
+  findOne(@Param('codStudyPlain') codStudyPlain: string, @Param('codCourse') codCourse: string) {
     return this.availablecourseService.findOne(codStudyPlain, codCourse);
   }
 
-  @Patch(':cod_study_plain/:cod_course')
-  update(@Param('cod_study_plain') codStudyPlain: string, @Param('cod_course') codCourse: string, @Body() updateAvailablecourseDto: UpdateAvailablecourseDto) {
+  @Patch(':codStudyPlain/:codCourse')
+  update(@Param('codStudyPlain') codStudyPlain: string, @Param('codCourse') codCourse: string, @Body() updateAvailablecourseDto: UpdateAvailablecourseDto) {
     return this.availablecourseService.update(codStudyPlain, codCourse, updateAvailablecourseDto);
   }
 
-  @Delete(':cod_study_plain/:cod_course')
-  remove(@Param('cod_study_plain') codStudyPlain: string, @Param('cod_course') codCourse: string) {
+  @Delete(':codStudyPlain/:codCourse')
+  remove(@Param('codStudyPlain') codStudyPlain: string, @Param('codCourse') codCourse: string) {
     return this.availablecourseService.remove(codStudyPlain, codCourse);
   }
 }

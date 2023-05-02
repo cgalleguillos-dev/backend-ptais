@@ -10,12 +10,12 @@ export class SubjecttakenService {
   constructor(@InjectModel(Subjecttaken)
   private subjecttakenModels: typeof Subjecttaken) { }
 
-  private async findSubjecttaken(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
+  private async findSubjecttaken(codCourse: string, codPlain: string, rut: string): Promise<Subjecttaken> {
     const subjectTaken = await this.subjecttakenModels.findOne({
       where: {
         cod_course: codCourse,
         cod_plain: codPlain,
-        rut_person: rutPerson
+        rut_person: rut
       }
     });
     if (!subjectTaken) {
@@ -29,7 +29,7 @@ export class SubjecttakenService {
       where: {
         cod_course: createSubjecttakenDto.cod_course,
         cod_plain: createSubjecttakenDto.cod_plain,
-        rut_person: createSubjecttakenDto.rut_person
+        rut_person: createSubjecttakenDto.rut
       }
     });
     if (subjectTaken) {
@@ -42,18 +42,18 @@ export class SubjecttakenService {
     return await this.subjecttakenModels.findAll();
   }
 
-  async findOne(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
-    return await this.findSubjecttaken(codCourse, codPlain, rutPerson);
+  async findOne(codCourse: string, codPlain: string, rut: string): Promise<Subjecttaken> {
+    return await this.findSubjecttaken(codCourse, codPlain, rut);
   }
 
-  async update(codCourse: string, codPlain: string, rutPerson: string, updateSubjecttakenDto: UpdateSubjecttakenDto): Promise<Subjecttaken> {
-    const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
+  async update(codCourse: string, codPlain: string, rut: string, updateSubjecttakenDto: UpdateSubjecttakenDto): Promise<Subjecttaken> {
+    const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rut);
     await subjectTaken.update(updateSubjecttakenDto);
     return subjectTaken;
   }
 
-  async remove(codCourse: string, codPlain: string, rutPerson: string): Promise<Subjecttaken> {
-    const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rutPerson);
+  async remove(codCourse: string, codPlain: string, rut: string): Promise<Subjecttaken> {
+    const subjectTaken = await this.findSubjecttaken(codCourse, codPlain, rut);
     await subjectTaken.destroy();
     return subjectTaken;
   }

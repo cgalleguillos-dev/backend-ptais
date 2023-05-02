@@ -9,7 +9,7 @@ export class UpdateStudentDto extends PartialType(CreateStudentDto) {
         description: 'Rut',
         example: '123456789',
     })
-    rut_person: string;
+    rut: string;
 
     @IsString()
     @ApiProperty({

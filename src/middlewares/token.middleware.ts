@@ -18,6 +18,8 @@ export class TokenMiddleware implements NestMiddleware {
 
             const verifyToken = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
             if (!verifyToken) throw new UnauthorizedException('Invalid token');
+
+            req['user'] = verifyToken;
             next();
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);

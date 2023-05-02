@@ -10,10 +10,10 @@ export class StudentService {
 
   constructor(@InjectModel(Student) private studentModel: typeof Student) { }
 
-  private async findStudent(rutPerson: string, codPlain: string): Promise<Student> {
+  private async findStudent(rut: string, codPlain: string): Promise<Student> {
     const student = await this.studentModel.findOne({
       where: {
-        rut_person: rutPerson,
+        rut_person: rut,
         cod_plain: codPlain,
       },
     });
@@ -23,10 +23,10 @@ export class StudentService {
     return student;
   }
 
-  async findByRut(rutPerson: string): Promise<Student> {
+  async findByRut(rut: string): Promise<Student> {
     const student = await this.studentModel.findOne({
       where: {
-        rut_person: rutPerson,
+        rut_person: rut,
       },
     });
     if (!student) {
@@ -38,7 +38,7 @@ export class StudentService {
   async create(createStudentDto: CreateStudentDto): Promise<Student> {
     const student = await this.studentModel.findOne({
       where: {
-        rut_person: createStudentDto.rut_person,
+        rut_person: createStudentDto.rut,
         cod_plain: createStudentDto.cod_plain,
       },
     });
@@ -52,26 +52,26 @@ export class StudentService {
     return await this.studentModel.findAll();
   }
 
-  async findOne(rutPerson: string, codPlain: string): Promise<Student> {
-    return await this.findStudent(rutPerson, codPlain);
+  async findOne(rut: string, codPlain: string): Promise<Student> {
+    return await this.findStudent(rut, codPlain);
   }
 
-  async update(rutPerson: string, codPlain: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
-    const student = await this.findStudent(rutPerson, codPlain);
+  async update(rut: string, codPlain: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
+    const student = await this.findStudent(rut, codPlain);
     await student.update(updateStudentDto);
     return student;
   }
 
-  async remove(rutPerson: string, codPlain: string): Promise<Student> {
-    const student = await this.findStudent(rutPerson, codPlain);
+  async remove(rut: string, codPlain: string): Promise<Student> {
+    const student = await this.findStudent(rut, codPlain);
     await student.destroy();
     return student;
   }
 
-  async getLevel(rutPerson: string, codStudyPlain: string): Promise<number> {
+  async getLevel(rut: string, codStudyPlain: string): Promise<number> {
     const response = await this.studentModel.sequelize.query<{ level: number }>('SELECT get_level_student as level FROM get_level_student(:rut, :cod_study_plain)', {
       replacements: {
-        rut: rutPerson,
+        rut: rut,
         cod_study_plain: codStudyPlain
       },
       type: QueryTypes.SELECT,
@@ -79,14 +79,19 @@ export class StudentService {
     return response[0].level;
   }
 
-  async getAverage(rutPerson: string): Promise<number> {
+  async getAverage(rut: string): Promise<number> {
     const response = await this.studentModel.sequelize.query<{ average: number }>('SELECT get_average_approval as average FROM get_average_approval(:rut)', {
       replacements: {
-        rut: rutPerson,
+        rut: rut,
       },
       type: QueryTypes.SELECT,
     });
     return response[0].average;
+  }
+
+  async getAverageCredits(): Promise<number> {
+
+    return
   }
 
 }

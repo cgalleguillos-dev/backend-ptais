@@ -47,7 +47,6 @@ import { Person } from './person/entities/person.entity';
   providers: [AppService],
 })
 
-// export class AppModule { }
 export class AppModule implements NestModule {
   configure(consumer: import("@nestjs/common").MiddlewareConsumer): any {
     consumer

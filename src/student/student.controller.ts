@@ -17,18 +17,24 @@ export class StudentController {
     return this.studentService.findAll();
   }
 
-  @Get(':rutPerson/:codPlain')
-  findOne(@Param('rutPerson') rutPerson: string, @Param('codPlain') codPlain) {
-    return this.studentService.findOne(rutPerson, codPlain);
+  @Get(':rut/:codPlain')
+  findOne(@Param('rut') rut: string, @Param('codPlain') codPlain) {
+    return this.studentService.findOne(rut, codPlain);
   }
 
-  @Patch(':rutPersona/:codPlain')
-  update(@Param('rutPerson') rutPerson: string, @Param('codPlain') codPlain: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(rutPerson, codPlain, updateStudentDto);
+  @Patch(':rut/:codPlain')
+  update(@Param('rut') rut: string, @Param('codPlain') codPlain: string, @Body() updateStudentDto: UpdateStudentDto) {
+    return this.studentService.update(rut, codPlain, updateStudentDto);
   }
 
-  @Delete(':rutPersona/:codPlain')
-  remove(@Param('rutPerson') rutPerson: string, @Param('codPlain') codPlain: string) {
-    return this.studentService.remove(rutPerson, codPlain);
+  @Delete(':rut/:codPlain')
+  remove(@Param('rut') rut: string, @Param('codPlain') codPlain: string) {
+    return this.studentService.remove(rut, codPlain);
+  }
+
+  @Get('averageCredits')
+  getAverageCredits() {
+
+    return this.studentService.getAverageCredits();
   }
 }

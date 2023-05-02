@@ -21,7 +21,7 @@ export class CreateSubjecttakenDto {
         description: 'Rut del estudiante',
         example: '123456789',
     })
-    rut_person: string;
+    rut: string;
 
     @IsNumber()
     @ApiProperty({

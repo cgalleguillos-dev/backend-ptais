@@ -7,14 +7,14 @@ export class CreateAvailablecourseDto {
         description: 'Codigo deL plan de estudio',
         example: '202010',
     })
-    cod_study_plain: string;
+    codStudyPlain: string;
 
     @IsString()
     @ApiProperty({
         description: 'Codigo del curso',
         example: '202010',
     })
-    cod_course: string;
+    codCourse: string;
 
     @IsNumber()
     @ApiProperty({

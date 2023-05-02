@@ -28,8 +28,8 @@ export class AvailablecourseService {
     const availableCourse = await this.availableCoursModels.findOne(
       {
         where: {
-          cod_study_plain: createAvailablecourseDto.cod_study_plain,
-          cod_course: createAvailablecourseDto.cod_course
+          cod_study_plain: createAvailablecourseDto.codStudyPlain,
+          cod_course: createAvailablecourseDto.codCourse
         }
       }
     );

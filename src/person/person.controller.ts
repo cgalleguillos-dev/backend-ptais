@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Auth } from 'src/auth/auth.decorator';
+import { JWTPayload } from 'src/auth/jwt.payload';
 
 @Controller('person')
 export class PersonController {
@@ -12,13 +15,14 @@ export class PersonController {
     return this.personService.create(createPersonDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.personService.findAll();
   }
 
-  @Get(':rut')
-  findOne(@Param('rut') rut: string) {
+  @UseGuards(AuthGuard)
+  @Get('me')
+  findOne(@Auth() { rut }: JWTPayload) {
     return this.personService.findOne(rut);
   }
 

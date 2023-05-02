@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Request } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { StudentService } from 'src/student/student.service';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ export class AuthService {
 
   async login(createAuthDto: CreateAuthDto) {
     const student = await this.studentService.findByRut(createAuthDto.rut);
-    const payload = { rutStudent: student.rut_person };
+    const payload = { rut: student.rut_person };
 
     return {
       access_token: this.jwtService.sign(payload),
@@ -21,10 +21,14 @@ export class AuthService {
 
   async refreshToken(createAuthDto: CreateAuthDto) {
     const student = await this.studentService.findByRut(createAuthDto.rut);
-    const payload = { rutStudent: student.rut_person };
+    const payload = { rut: student.rut_person };
 
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  // example(@Request() req) {
+
+  // }
 }
